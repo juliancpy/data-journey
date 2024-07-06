@@ -1,0 +1,29 @@
+name: Terraform CI
+
+on:
+  push:
+    paths:
+      - 'IaaC/**.tf'
+  pull_request:
+    paths:
+      - 'IaaC/**.tf'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan
+      run: terraform plan
