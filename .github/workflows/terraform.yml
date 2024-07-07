@@ -30,9 +30,11 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
+      working-directory: ./IaaC
 
     - name: Terraform Plan
       run: terraform plan
+      working-directory: ./IaaC
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
