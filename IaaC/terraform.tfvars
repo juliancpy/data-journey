@@ -1,2 +1,3 @@
 # Environment definition
-region = "eu-west-2"
+region = "europe-west2"
+project = "dj-learn"
