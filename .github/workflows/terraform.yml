@@ -28,6 +28,9 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
 
+    - name: Export GCP Credentials
+      run: echo "GOOGLE_CREDENTIALS=${{ secrets.GCP_SA_KEY }}" >> $GITHUB_ENV
+
     - name: Terraform Init
       run: terraform init
       working-directory: ./IaaC
@@ -36,7 +39,7 @@ jobs:
       run: terraform plan
       working-directory: ./IaaC
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
   terraform_apply:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
