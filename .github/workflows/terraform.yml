@@ -22,12 +22,6 @@ jobs:
       with:
         terraform_version: 1.1.6
 
-    - name: Setup GCP Credentials
-      uses: google-github-actions/setup-gcloud@main
-      with:
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        export_default_credentials: true
-
     - name: Terraform Init
       run: terraform init
       working-directory: ./IaaC
@@ -50,10 +44,18 @@ jobs:
       with:
         terraform_version: 1.1.6
 
+    - name: Setup GCP Credentials
+      uses: google-github-actions/setup-gcloud@main
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+
     - name: Terraform Init
       run: terraform init
+      working-directory: ./IaaC
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
+      working-directory: ./IaaC
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
