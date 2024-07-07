@@ -21,9 +21,9 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.0.0
-        
+
     - name: Setup GCP Credentials
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@main
       with:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
