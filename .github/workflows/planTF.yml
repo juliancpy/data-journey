@@ -3,7 +3,7 @@ name: linting
 on:
   pull_request:
     paths:
-      - 'IaaC/**.tf'
+    - 'IaaC/**.tf'
 
 jobs:
   terraform_plan:

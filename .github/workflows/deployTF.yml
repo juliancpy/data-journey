@@ -3,10 +3,9 @@ name: Deploy Terraform
 on:
   push:
     branches:
-      - main
+    - main
     paths:
-      - 'IaaC/**.tf'
-
+    - 'IaaC/**.tf'
 jobs:
   terraform_apply:
     if: github.event.pull_request.merged == true
