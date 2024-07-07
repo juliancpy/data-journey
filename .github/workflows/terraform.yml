@@ -33,7 +33,7 @@ jobs:
         GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
   terraform_apply:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event.pull_request.merged == true && github.ref == 'refs/heads/main'
     needs: terraform_plan
     runs-on: ubuntu-latest
     steps:
