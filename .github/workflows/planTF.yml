@@ -10,22 +10,23 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: 1.1.6
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.6
 
-    - name: Terraform Init
-      run: terraform init
-      working-directory: ./IaaC
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./IaaC
 
-    - name: Terraform Plan
-      run: terraform plan
-      working-directory: ./IaaC
-      env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./IaaC
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+
   Yamllint:
     name: "Yaml lint"
     runs-on: ubuntu-latest
