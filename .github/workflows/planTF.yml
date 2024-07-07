@@ -22,7 +22,7 @@ jobs:
         working-directory: ./IaaC
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -lock=true -input=false -refresh=false -var-file='terraform.tfvars'
         working-directory: ./IaaC
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}

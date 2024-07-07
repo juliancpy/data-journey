@@ -22,7 +22,7 @@ jobs:
         working-directory: ./IaaC
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve --refresh=true
+        run: terraform apply -lock=true -input=false -refresh=false -auto-approve
         working-directory: ./IaaC
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
