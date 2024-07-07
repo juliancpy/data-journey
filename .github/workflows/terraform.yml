@@ -2,6 +2,8 @@ name: Terraform CI
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'IaaC/**.tf'
   pull_request:
@@ -9,7 +11,34 @@ on:
       - 'IaaC/**.tf'
 
 jobs:
-  terraform:
+  terraform_plan:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
+        
+    - name: Setup GCP Credentials
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      run: terraform plan
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  terraform_apply:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: terraform_plan
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -22,8 +51,7 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Validate
-      run: terraform validate
-
-    - name: Terraform Plan
-      run: terraform plan
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
