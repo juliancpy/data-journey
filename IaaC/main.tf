@@ -1,4 +1,4 @@
-# Trigger: Terraform apply
+# Trigger: Terraform apply test for GCP
 module "providers" {
     source  = "./modules/providers"
     project = local.project_name
