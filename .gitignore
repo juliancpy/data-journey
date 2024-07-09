@@ -164,3 +164,4 @@ cython_debug/
 *.tfstate.backup
 *.terraform.lock.hcl
 */.terraform/
+py-data/Pipfile.lock
